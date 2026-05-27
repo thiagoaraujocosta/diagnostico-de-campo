@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Diagnóstico de Campo - Lugares de Patrimônio: Museus - SISEM 2026</title>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;max-width:1000px;margin:0 auto;padding:24px;color:#222;background:#f6f6f4}
+  header{text-align:center;border-bottom:3px solid #0a4d68;padding-bottom:16px;margin-bottom:24px}
+  header h1{margin:0;color:#0a4d68;font-size:1.6em}
+  header p{margin:4px 0;color:#555}
+  h2{background:#0a4d68;color:#fff;padding:10px 14px;margin-top:32px;font-size:1.1em;border-radius:4px}
+  h3{color:#0a4d68;border-bottom:1px solid #cfd8dc;padding-bottom:4px;margin-top:24px;font-size:1em}
+  fieldset{border:1px solid #cfd8dc;border-radius:6px;margin:14px 0;padding:14px;background:#fff}
+  legend{font-weight:600;color:#0a4d68;padding:0 6px}
+  label{display:block;margin:8px 0 4px;font-weight:500;font-size:.95em}
+  input[type=text],input[type=email],input[type=url],input[type=number],input[type=tel],textarea,select{
+    width:100%;padding:8px;border:1px solid #b0bec5;border-radius:4px;font-family:inherit;font-size:.95em;background:#fafafa}
+  textarea{min-height:70px;resize:vertical}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px 14px}
+  .opts{display:flex;flex-wrap:wrap;gap:6px 18px;margin:4px 0}
+  .opts label{display:inline-flex;align-items:center;gap:6px;font-weight:400;margin:2px 0}
+  .opts input{width:auto;margin:0}
+  .inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .inline input[type=text],.inline input[type=number]{width:auto;flex:1;min-width:120px}
+  .actions{position:sticky;bottom:0;background:#fff;padding:14px;border-top:2px solid #0a4d68;margin-top:24px;text-align:center;display:flex;gap:10px;justify-content:center}
+  button{background:#0a4d68;color:#fff;border:0;padding:10px 20px;border-radius:4px;font-size:1em;cursor:pointer}
+  button.secondary{background:#607d8b}
+  button:hover{opacity:.9}
+  @media print{.actions{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<form id="diag">
+<header>
+  <h1>DIAGNÓSTICO DE CAMPO</h1>
+  <p><strong>LUGARES DE PATRIMÔNIO: MUSEUS</strong></p>
+  <p>SISEM — 2026</p>
+</header>
+
+<h2>1. Dados Gerais do Município</h2>
+<fieldset><div class="row">
+  <div><label>Município<input type="text" name="municipio"></label></div>
+  <div><label>Região Administrativa<input type="text" name="regiao_adm"></label></div>
+  <div><label>Região de Governo<input type="text" name="regiao_gov"></label></div>
+  <div><label>Distância da capital<input type="text" name="distancia_capital"></label></div>
+</div></fieldset>
+
+<h2>2. Dados Político-Administrativos</h2>
+<fieldset><legend>Prefeitura</legend>
+<div class="row">
+  <div><label>Prefeito<input type="text" name="prefeito"></label></div>
+  <div><label>Endereço da Prefeitura<input type="text" name="pref_end"></label></div>
+  <div><label>Nº<input type="text" name="pref_num"></label></div>
+  <div><label>Bairro<input type="text" name="pref_bairro"></label></div>
+  <div><label>CEP<input type="text" name="pref_cep"></label></div>
+  <div><label>Telefone<input type="tel" name="pref_tel"></label></div>
+  <div><label>Ramal<input type="text" name="pref_ramal"></label></div>
+  <div><label>E-mail<input type="email" name="pref_email"></label></div>
+  <div><label>Site<input type="url" name="pref_site"></label></div>
+</div></fieldset>
+
+<fieldset><legend>Órgão de Cultura</legend>
+<div class="row">
+  <div><label>Nome do órgão responsável pela Cultura<input type="text" name="cult_orgao"></label></div>
+  <div><label>Nome do responsável<input type="text" name="cult_resp"></label></div>
+  <div><label>Cargo<input type="text" name="cult_cargo"></label></div>
+  <div><label>Endereço<input type="text" name="cult_end"></label></div>
+  <div><label>Número<input type="text" name="cult_num"></label></div>
+  <div><label>Bairro<input type="text" name="cult_bairro"></label></div>
+  <div><label>CEP<input type="text" name="cult_cep"></label></div>
+  <div><label>Telefone<input type="tel" name="cult_tel"></label></div>
+  <div><label>Ramal<input type="text" name="cult_ramal"></label></div>
+  <div><label>E-mail<input type="email" name="cult_email"></label></div>
+  <div><label>Site<input type="url" name="cult_site"></label></div>
+</div></fieldset>
+
+<fieldset><legend>Gestão de museus e bens culturais</legend>
+  <label>A gestão de museus e de bens culturais do município está vinculada ao mesmo órgão informado acima?</label>
+  <div class="opts">
+    <label><input type="radio" name="gestao_vinc" value="Sim">Sim</label>
+    <label><input type="radio" name="gestao_vinc" value="Não">Não</label>
+    <label><input type="radio" name="gestao_vinc" value="Não se aplica">Não se aplica</label>
+  </div>
+  <label>Nome do Órgão (responsável pela gestão)<input type="text" name="gestao_orgao"></label>
+  <label>Área(s) de responsabilidade:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="gestao_area_museus">Museus</label>
+    <label><input type="checkbox" name="gestao_area_materiais">Bens culturais materiais tombados</label>
+    <label><input type="checkbox" name="gestao_area_imateriais">Bens culturais imateriais registrados</label>
+  </div>
+  <div class="row">
+    <div><label>Nome do Responsável<input type="text" name="gestao_resp"></label></div>
+    <div><label>Cargo<input type="text" name="gestao_resp_cargo"></label></div>
+  </div>
+</fieldset>
+
+<h2>3. Dados Gerais da Instituição</h2>
+<fieldset>
+  <label>Tipologia:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="tip_museu">Museu</label>
+    <label><input type="checkbox" name="tip_casa">Casa de Cultura</label>
+    <label><input type="checkbox" name="tip_centro_memoria">Centro de Memória</label>
+    <label><input type="checkbox" name="tip_centro_cultural">Centro Cultural</label>
+    <label><input type="checkbox" name="tip_arquivo">Arquivo Histórico</label>
+    <label><input type="checkbox" name="tip_biblioteca">Biblioteca Pública Municipal</label>
+    <label><input type="checkbox" name="tip_outros">Outros</label>
+  </div>
+  <label>Outros (especificar)<input type="text" name="tip_outros_esp"></label>
+  <label>Nome (conforme registro oficial)<input type="text" name="inst_nome"></label>
+
+  <label>Temáticas (máx. 5, em ordem de relevância):</label>
+  <div class="opts">
+    <label><input type="checkbox" name="tem_arte">Arte</label>
+    <label><input type="checkbox" name="tem_arte_sacra">Arte Sacra</label>
+    <label><input type="checkbox" name="tem_antrop">Antropologia/Arqueologia/Etnologia</label>
+    <label><input type="checkbox" name="tem_bio">Biográfico</label>
+    <label><input type="checkbox" name="tem_chn">Ciências e História Natural</label>
+    <label><input type="checkbox" name="tem_ct">Ciência e Tecnologia</label>
+    <label><input type="checkbox" name="tem_dh">Direitos Humanos</label>
+    <label><input type="checkbox" name="tem_esp">Esportes</label>
+    <label><input type="checkbox" name="tem_hist">História</label>
+    <label><input type="checkbox" name="tem_geo">Geociência/Mineralogia/Astronomia</label>
+    <label><input type="checkbox" name="tem_terr">Território</label>
+    <label><input type="checkbox" name="tem_outros">Outros</label>
+  </div>
+  <label>Outras temáticas (especificar)<input type="text" name="tem_outros_esp"></label>
+
+  <div class="row">
+    <div><label>Endereço da instituição<input type="text" name="inst_end"></label></div>
+    <div><label>Número<input type="text" name="inst_num"></label></div>
+    <div><label>Bairro<input type="text" name="inst_bairro"></label></div>
+    <div><label>CEP<input type="text" name="inst_cep"></label></div>
+    <div><label>Cidade<input type="text" name="inst_cidade"></label></div>
+    <div><label>Telefone<input type="tel" name="inst_tel"></label></div>
+    <div><label>Ramal<input type="text" name="inst_ramal"></label></div>
+    <div><label>E-mail<input type="email" name="inst_email"></label></div>
+    <div><label>Site<input type="url" name="inst_site"></label></div>
+  </div>
+
+  <h3>Horário de funcionamento</h3>
+  <div class="inline">
+    <span>De</span><input type="text" name="hor_dia_inicio" placeholder="ex: 2ª">
+    <span>fª a</span><input type="text" name="hor_dia_fim" placeholder="ex: 6ª">
+    <span>das</span><input type="text" name="hor_h_inicio" placeholder="hs">
+    <span>às</span><input type="text" name="hor_h_fim" placeholder="hs">
+  </div>
+  <div class="inline">
+    <span>Sábados: das</span><input type="text" name="hor_sab_ini">
+    <span>às</span><input type="text" name="hor_sab_fim">
+    <label><input type="checkbox" name="hor_sab_naoabre">Não abre</label>
+  </div>
+  <div class="inline">
+    <span>Domingos: das</span><input type="text" name="hor_dom_ini">
+    <span>às</span><input type="text" name="hor_dom_fim">
+    <label><input type="checkbox" name="hor_dom_naoabre">Não abre</label>
+  </div>
+  <label>Observações<textarea name="hor_obs"></textarea></label>
+
+  <div class="row">
+    <div><label>Ano de criação<input type="text" name="ano_criacao"></label></div>
+    <div><label>Ano de abertura ao público<input type="text" name="ano_abertura"></label></div>
+  </div>
+  <label>Histórico da instituição<textarea name="historico" style="min-height:140px"></textarea></label>
+
+  <label>Possui Decreto de Criação?</label>
+  <div class="opts">
+    <label><input type="radio" name="decreto" value="Não">Não</label>
+    <label><input type="radio" name="decreto" value="Sim">Sim</label>
+  </div>
+  <label>Especificar<input type="text" name="decreto_esp"></label>
+
+  <label>Possui Regimento Interno?</label>
+  <div class="opts">
+    <label><input type="radio" name="regimento" value="Não">Não</label>
+    <label><input type="radio" name="regimento" value="Sim">Sim</label>
+  </div>
+
+  <label>Possui associação de amigos ou outra instituição de apoio?</label>
+  <div class="opts">
+    <label><input type="radio" name="amigos" value="Não">Não</label>
+    <label><input type="radio" name="amigos" value="Sim">Sim</label>
+  </div>
+  <label>Nome<input type="text" name="amigos_nome"></label>
+
+  <label>Possui entidade mantenedora?</label>
+  <div class="opts">
+    <label><input type="radio" name="mantenedora" value="Não">Não</label>
+    <label><input type="radio" name="mantenedora" value="Sim">Sim</label>
+  </div>
+  <label>Ato e ano da incorporação<input type="text" name="mant_ato"></label>
+
+  <label>Esfera administrativa:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="esf_federal">Federal</label>
+    <label><input type="checkbox" name="esf_estadual">Estadual</label>
+    <label><input type="checkbox" name="esf_municipal">Municipal</label>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="esf_pub_dir">Pública direta</label>
+    <label><input type="checkbox" name="esf_pub_ind">Pública indireta</label>
+    <label><input type="checkbox" name="esf_privada">Privada</label>
+  </div>
+
+  <label>Tipo de Esfera Administrativa Privada:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="priv_assoc">Associação/Instituto</label>
+    <label><input type="checkbox" name="priv_empresa">Empresa</label>
+    <label><input type="checkbox" name="priv_fundacao">Fundação</label>
+    <label><input type="checkbox" name="priv_soc">Sociedade</label>
+    <label><input type="checkbox" name="priv_mista">Mista</label>
+    <label><input type="checkbox" name="priv_oscip">OSCIP</label>
+    <label><input type="checkbox" name="priv_os">OS</label>
+    <label><input type="checkbox" name="priv_outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="priv_outro_esp"></label>
+
+  <label>Instituição será municipalizada ou está em processo de municipalização?</label>
+  <div class="opts">
+    <label><input type="radio" name="municipaliz" value="Não">Não</label>
+    <label><input type="radio" name="municipaliz" value="Sim">Sim</label>
+    <label><input type="radio" name="municipaliz" value="Não informado">Não informado</label>
+  </div>
+
+  <h3>Diretor (Responsável)</h3>
+  <div class="row">
+    <div><label>Nome<input type="text" name="dir_nome"></label></div>
+    <div><label>E-mail<input type="email" name="dir_email"></label></div>
+    <div><label>Telefone<input type="tel" name="dir_tel"></label></div>
+  </div>
+</fieldset>
+
+<h2>4. Recursos Humanos</h2>
+<fieldset>
+  <label>A instituição possui quadro permanente de profissionais?</label>
+  <div class="opts">
+    <label><input type="radio" name="rh_perm" value="Não">Não</label>
+    <label><input type="radio" name="rh_perm" value="Sim">Sim</label>
+  </div>
+  <div class="row">
+    <div><label>Nº de funcionários permanentes<input type="number" name="rh_n_perm"></label></div>
+    <div><label>Nº de funcionários terceirizados<input type="number" name="rh_n_terc"></label></div>
+    <div><label>Nº de estagiários<input type="number" name="rh_n_estag"></label></div>
+    <div><label>Nº de voluntários<input type="number" name="rh_n_vol"></label></div>
+    <div><label>Nº total de pessoas<input type="number" name="rh_n_total"></label></div>
+  </div>
+  <label>Serviços terceirizados:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="terc_seg">Segurança</label>
+    <label><input type="checkbox" name="terc_limp">Limpeza</label>
+    <label><input type="checkbox" name="terc_outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="terc_outro_esp"></label>
+
+  <label>Há museólogo, arquivista, bibliotecário no quadro permanente?</label>
+  <div class="opts">
+    <label><input type="radio" name="rh_especialistas" value="Não">Não</label>
+    <label><input type="radio" name="rh_especialistas" value="Sim">Sim</label>
+  </div>
+  <label>Especifique os existentes e o tipo de vínculo (quadro fixo, terceirizado, prestador, consultoria, etc.)
+    <textarea name="rh_esp_detalhe"></textarea></label>
+</fieldset>
+
+<h2>5. Caracterização Física do Edifício</h2>
+<fieldset>
+  <label>Natureza da edificação:</label>
+  <div class="opts">
+    <label><input type="radio" name="edif_nat" value="Pública">Pública</label>
+    <label><input type="radio" name="edif_nat" value="Privada">Privada</label>
+  </div>
+  <label>Se pública, qual esfera:</label>
+  <div class="opts">
+    <label><input type="radio" name="edif_esf" value="Federal">Federal</label>
+    <label><input type="radio" name="edif_esf" value="Estadual">Estadual</label>
+    <label><input type="radio" name="edif_esf" value="Municipal">Municipal</label>
+  </div>
+  <label>Se privado, qual situação:</label>
+  <div class="opts">
+    <label><input type="radio" name="edif_priv" value="Próprio">Próprio</label>
+    <label><input type="radio" name="edif_priv" value="Empréstimo/comodato">Empréstimo/comodato</label>
+    <label><input type="radio" name="edif_priv" value="Alugado">Alugado</label>
+    <label><input type="radio" name="edif_priv" value="Outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="edif_priv_outro"></label>
+
+  <label>O edifício é tombado?</label>
+  <div class="opts">
+    <label><input type="radio" name="tombado" value="Não">Não</label>
+    <label><input type="radio" name="tombado" value="Sim">Sim</label>
+  </div>
+  <label>Ano de tombamento<input type="text" name="tombado_ano"></label>
+  <label>Em caso de tombamento, por qual entidade?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="tomb_iphan">IPHAN</label>
+    <label><input type="checkbox" name="tomb_condephaat">CONDEPHAAT</label>
+    <label><input type="checkbox" name="tomb_municipal">Órgão municipal</label>
+  </div>
+
+  <label>Houve intervenção de restauro no imóvel?</label>
+  <div class="opts">
+    <label><input type="radio" name="restauro" value="Não">Não</label>
+    <label><input type="radio" name="restauro" value="Sim">Sim</label>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="restauro_antes">Antes da municipalização</label>
+    <label><input type="checkbox" name="restauro_depois">Depois da municipalização</label>
+  </div>
+
+  <label>Divide o prédio com outra entidade?</label>
+  <div class="opts">
+    <label><input type="radio" name="divide" value="Não">Não</label>
+    <label><input type="radio" name="divide" value="Sim">Sim</label>
+  </div>
+  <label>Com qual entidade:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="div_pref">Prefeitura</label>
+    <label><input type="checkbox" name="div_escola">Escola</label>
+    <label><input type="checkbox" name="div_arquivo">Arquivo</label>
+    <label><input type="checkbox" name="div_bib">Biblioteca</label>
+    <label><input type="checkbox" name="div_cc">Centro Cultural</label>
+    <label><input type="checkbox" name="div_outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="div_outro_esp"></label>
+</fieldset>
+
+<h2>6. Instalações da Instituição</h2>
+<fieldset>
+  <label>O prédio foi construído para a finalidade que exerce (ex. Museu)?</label>
+  <div class="opts">
+    <label><input type="radio" name="construido_fim" value="Não">Não</label>
+    <label><input type="radio" name="construido_fim" value="Sim">Sim</label>
+  </div>
+  <label>Especificar<input type="text" name="construido_esp"></label>
+
+  <label>Quantos pavimentos:</label>
+  <div class="opts">
+    <label><input type="radio" name="pavimentos" value="1">1 (térreo)</label>
+    <label><input type="radio" name="pavimentos" value="2">2</label>
+    <label><input type="radio" name="pavimentos" value="3">3</label>
+    <label><input type="radio" name="pavimentos" value="Mais de 3">Mais de 3</label>
+  </div>
+
+  <label>Existe levantamento arquitetônico (planta)?</label>
+  <div class="opts">
+    <label><input type="radio" name="planta" value="Não">Não</label>
+    <label><input type="radio" name="planta" value="Sim">Sim</label>
+  </div>
+  <label>Em caso de reforma, existe planta atualizada?</label>
+  <div class="opts">
+    <label><input type="radio" name="planta_atual" value="Não">Não</label>
+    <label><input type="radio" name="planta_atual" value="Sim">Sim</label>
+  </div>
+
+  <h3>Áreas (m²)</h3>
+  <div class="row">
+    <div><label>1º pavimento<input type="number" step="0.01" name="area_1pav"></label></div>
+    <div><label>2º pavimento<input type="number" step="0.01" name="area_2pav"></label></div>
+    <div><label>3º pavimento<input type="number" step="0.01" name="area_3pav"></label></div>
+    <div><label>Outro prédio<input type="number" step="0.01" name="area_outro"></label></div>
+    <div><label>Edícula<input type="number" step="0.01" name="area_edicula"></label></div>
+    <div><label>Área total construída<input type="number" step="0.01" name="area_total"></label></div>
+    <div><label>Área do terreno<input type="number" step="0.01" name="area_terreno"></label></div>
+    <div><label>Área livre<input type="number" step="0.01" name="area_livre"></label></div>
+    <div><label>Estacionamento (m²)<input type="number" step="0.01" name="area_estac"></label></div>
+    <div><label>Quantas vagas?<input type="number" name="estac_vagas"></label></div>
+  </div>
+
+  <label>Quantos acessos externos:</label>
+  <div class="opts">
+    <label><input type="radio" name="acessos" value="1">1</label>
+    <label><input type="radio" name="acessos" value="2">2</label>
+    <label><input type="radio" name="acessos" value="3">3</label>
+    <label><input type="radio" name="acessos" value="Mais de 3">Mais de 3</label>
+  </div>
+
+  <label>Possui entradas separadas para:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="ent_visit">Visitantes</label>
+    <label><input type="checkbox" name="ent_func">Funcionários</label>
+    <label><input type="checkbox" name="ent_serv">Serviço</label>
+    <label><input type="checkbox" name="ent_unica">Entrada única</label>
+  </div>
+
+  <h3>Instalações existentes</h3>
+  <div class="opts">
+    <label><input type="checkbox" name="inst_exp_perm">Sala de exposições permanentes</label>
+  </div>
+  <label>Quantas (permanentes)?<input type="number" name="inst_exp_perm_qtd"></label>
+  <div class="opts">
+    <label><input type="checkbox" name="inst_exp_temp">Sala de exposição temporária</label>
+  </div>
+  <label>Quantas (temporárias)?<input type="number" name="inst_exp_temp_qtd"></label>
+  <div class="opts">
+    <label><input type="checkbox" name="inst_recep">Recepção</label>
+    <label><input type="checkbox" name="inst_chap">Chapelaria</label>
+    <label><input type="checkbox" name="inst_loja">Loja</label>
+    <label><input type="checkbox" name="inst_liv">Livraria</label>
+    <label><input type="checkbox" name="inst_rt">Reserva técnica</label>
+    <label><input type="checkbox" name="inst_adm">Sala de Administração</label>
+    <label><input type="checkbox" name="inst_dir">Sala de Diretoria</label>
+    <label><input type="checkbox" name="inst_eq">Sala para equipe técnica</label>
+    <label><input type="checkbox" name="inst_lanch">Lanchonete/Restaurante</label>
+    <label><input type="checkbox" name="inst_bib">Biblioteca</label>
+    <label><input type="checkbox" name="inst_copa">Copa/Cozinha</label>
+    <label><input type="checkbox" name="inst_sec">Secretaria</label>
+    <label><input type="checkbox" name="inst_reun">Sala de reuniões</label>
+    <label><input type="checkbox" name="inst_ocio">Espaços ociosos</label>
+    <label><input type="checkbox" name="inst_higi">Sala de conservação/Higienização</label>
+    <label><input type="checkbox" name="inst_edu">Sala para atividades educativas</label>
+    <label><input type="checkbox" name="inst_san">Sanitários públicos</label>
+    <label><input type="checkbox" name="inst_beb">Bebedouro público</label>
+    <label><input type="checkbox" name="inst_tel">Telefone público</label>
+    <label><input type="checkbox" name="inst_wifi">Wi-fi para o público</label>
+    <label><input type="checkbox" name="inst_aud">Auditório</label>
+  </div>
+  <label>Auditório - capacidade?<input type="number" name="inst_aud_qtd"></label>
+
+  <h3>Acessibilidade</h3>
+  <div class="opts">
+    <label><input type="checkbox" name="ac_vagas">Vagas exclusivas no estacionamento</label>
+    <label><input type="checkbox" name="ac_elev">Elevador acessível</label>
+    <label><input type="checkbox" name="ac_rampa">Rampa de acesso</label>
+    <label><input type="checkbox" name="ac_san">Sanitários adaptados</label>
+    <label><input type="checkbox" name="ac_braile">Textos/etiquetas em braile</label>
+    <label><input type="checkbox" name="ac_outros">Outros</label>
+  </div>
+  <label>Outros (especificar)<input type="text" name="ac_outros_esp"></label>
+
+  <h3>Infraestrutura de trabalho</h3>
+  <div class="opts">
+    <label><input type="checkbox" name="inf_mesa">Mesas e cadeiras para equipe</label>
+    <label><input type="checkbox" name="inf_comp">Computador em número suficiente</label>
+    <label><input type="checkbox" name="inf_impr">Impressora/copiadora</label>
+    <label><input type="checkbox" name="inf_scan">Scanner profissional</label>
+    <label><input type="checkbox" name="inf_internet">Internet (Wi-fi ou cabeada)</label>
+  </div>
+  <label>Caso possua apenas parte/insuficiente, especifique<textarea name="inf_esp"></textarea></label>
+</fieldset>
+
+<h2>7. Segurança e Controle Patrimonial</h2>
+<fieldset>
+  <label>O acesso à reserva técnica é exclusivo dos funcionários?</label>
+  <div class="opts">
+    <label><input type="radio" name="rt_acesso" value="Não">Não</label>
+    <label><input type="radio" name="rt_acesso" value="Sim">Sim</label>
+  </div>
+  <label>Especificar<input type="text" name="rt_acesso_esp"></label>
+
+  <label>Possui sistema de segurança contra roubo?</label>
+  <div class="opts">
+    <label><input type="radio" name="seg_roubo" value="Não">Não</label>
+    <label><input type="radio" name="seg_roubo" value="Sim">Sim</label>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="seg_alarme">Alarme</label>
+    <label><input type="checkbox" name="seg_trancas">Trancas</label>
+    <label><input type="checkbox" name="seg_grades">Grades nas janelas</label>
+  </div>
+
+  <label>Possui equipe de segurança?</label>
+  <div class="opts">
+    <label><input type="radio" name="seg_equipe" value="Não">Não</label>
+    <label><input type="radio" name="seg_equipe" value="Sim">Sim</label>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="vig_diurna">Vigilância diurna</label>
+    <label><input type="checkbox" name="vig_noturna">Vigilância noturna</label>
+    <label><input type="checkbox" name="vig_24h">Vigilância diurna e noturna</label>
+    <label><input type="checkbox" name="vig_propria">Equipe própria</label>
+    <label><input type="checkbox" name="vig_terc">Equipe terceirizada</label>
+  </div>
+
+  <label>Possui sistema de segurança contra incêndio?</label>
+  <div class="opts">
+    <label><input type="radio" name="seg_inc" value="Não">Não</label>
+    <label><input type="radio" name="seg_inc" value="Sim">Sim</label>
+  </div>
+  <div class="row">
+    <div><label><input type="checkbox" name="ext_a"> Extintores água pressurizada (Classe A) — Quantos?
+      <input type="number" name="ext_a_qtd"></label></div>
+    <div><label><input type="checkbox" name="ext_abc"> Extintores pó químico seco (ABC) — Quantos?
+      <input type="number" name="ext_abc_qtd"></label></div>
+    <div><label><input type="checkbox" name="ext_co2"> Extintores CO² — Quantos?
+      <input type="number" name="ext_co2_qtd"></label></div>
+    <div><label><input type="checkbox" name="ext_hid"> Hidrantes — Quantos?
+      <input type="number" name="ext_hid_qtd"></label></div>
+    <div><label><input type="checkbox" name="ext_fum"> Detectores de fumaça — Quantos?
+      <input type="number" name="ext_fum_qtd"></label></div>
+    <div><label><input type="checkbox" name="ext_outros"> Outros
+      <input type="text" name="ext_outros_esp"></label></div>
+  </div>
+
+  <label>Há revisão periódica de extintores, mangueiras e hidrantes?</label>
+  <div class="opts">
+    <label><input type="radio" name="rev_inc" value="Não">Não</label>
+    <label><input type="radio" name="rev_inc" value="Sim">Sim</label>
+    <label><input type="radio" name="rev_inc" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Frequência:</label>
+  <div class="opts">
+    <label><input type="radio" name="rev_freq" value="Mensal">Mensal</label>
+    <label><input type="radio" name="rev_freq" value="Bimestral">Bimestral</label>
+    <label><input type="radio" name="rev_freq" value="Trimestral">Trimestral</label>
+    <label><input type="radio" name="rev_freq" value="Semestral">Semestral</label>
+    <label><input type="radio" name="rev_freq" value="Anual">Anual</label>
+  </div>
+
+  <label>Possui saídas de emergência?</label>
+  <div class="opts">
+    <label><input type="radio" name="saidas" value="Não">Não</label>
+    <label><input type="radio" name="saidas" value="Sim">Sim</label>
+  </div>
+  <label>Quantas?</label>
+  <div class="opts">
+    <label><input type="radio" name="saidas_qtd" value="1">1</label>
+    <label><input type="radio" name="saidas_qtd" value="2">2</label>
+    <label><input type="radio" name="saidas_qtd" value="3">3</label>
+    <label><input type="radio" name="saidas_qtd" value="Mais de 3">Mais de 3</label>
+  </div>
+
+  <label>Há sinalização de emergência (e equipamentos)?</label>
+  <div class="opts">
+    <label><input type="radio" name="sinal_emerg" value="Não">Não</label>
+    <label><input type="radio" name="sinal_emerg" value="Sim">Sim</label>
+  </div>
+
+  <label>Possui brigada de incêndio?</label>
+  <div class="opts">
+    <label><input type="radio" name="brigada" value="Não">Não</label>
+    <label><input type="radio" name="brigada" value="Sim">Sim</label>
+    <label><input type="radio" name="brigada" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Quantos membros?</label>
+  <div class="opts">
+    <label><input type="radio" name="brigada_m" value="5 ou mais">5 ou mais</label>
+    <label><input type="radio" name="brigada_m" value="10 ou mais">10 ou mais</label>
+    <label><input type="radio" name="brigada_m" value="20 ou mais">20 ou mais</label>
+    <label><input type="radio" name="brigada_m" value="Não soube informar">Não soube informar</label>
+  </div>
+
+  <label>Funcionários recebem treinamento contra incêndio?</label>
+  <div class="opts">
+    <label><input type="radio" name="treino_inc" value="Não">Não</label>
+    <label><input type="radio" name="treino_inc" value="Sim">Sim</label>
+    <label><input type="radio" name="treino_inc" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Periodicidade:</label>
+  <div class="opts">
+    <label><input type="radio" name="treino_per" value="Semestral">Semestral</label>
+    <label><input type="radio" name="treino_per" value="Anual">Anual</label>
+    <label><input type="radio" name="treino_per" value="Maior que 1 ano">Maior que 1 ano</label>
+    <label><input type="radio" name="treino_per" value="Não soube informar">Não soube informar</label>
+  </div>
+
+  <label>Possui AVCB?</label>
+  <div class="opts">
+    <label><input type="radio" name="avcb" value="Não">Não</label>
+    <label><input type="radio" name="avcb" value="Sim">Sim</label>
+    <label><input type="radio" name="avcb" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Validade<input type="text" name="avcb_val"></label>
+
+  <label>Existe corpo de bombeiros na cidade?</label>
+  <div class="opts">
+    <label><input type="radio" name="bomb" value="Não">Não</label>
+    <label><input type="radio" name="bomb" value="Sim">Sim</label>
+  </div>
+  <label>Distância da unidade mais próxima<input type="text" name="bomb_dist"></label>
+</fieldset>
+
+<h2>8. Condições Físicas do Edifício</h2>
+<fieldset>
+  <label>Estado geral do edifício:</label>
+  <div class="opts">
+    <label><input type="radio" name="edif_estado" value="Bom, não necessita">Bom, não necessita de reparos/restauros</label>
+    <label><input type="radio" name="edif_estado" value="Bom, necessita pintura">Bom, necessita de pintura</label>
+    <label><input type="radio" name="edif_estado" value="Razoável">Razoável, necessita pequenos reparos</label>
+    <label><input type="radio" name="edif_estado" value="Ruim">Ruim, necessita reforma geral/restauro</label>
+  </div>
+  <label>No caso de necessidade de reparos, de que tipo?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="rep_eletrica">Instalação elétrica</label>
+    <label><input type="checkbox" name="rep_portas">Portas/janelas</label>
+    <label><input type="checkbox" name="rep_estrut">Estrutura do prédio</label>
+    <label><input type="checkbox" name="rep_pintura">Pintura</label>
+    <label><input type="checkbox" name="rep_hidr">Instalação hidráulica</label>
+    <label><input type="checkbox" name="rep_fachada">Reconstituição da fachada</label>
+    <label><input type="checkbox" name="rep_esgoto">Esgoto</label>
+    <label><input type="checkbox" name="rep_telhado">Telhado</label>
+  </div>
+
+  <label>O sistema elétrico tem manutenção constante?</label>
+  <div class="opts">
+    <label><input type="radio" name="eletrica_manut" value="Não">Não</label>
+    <label><input type="radio" name="eletrica_manut" value="Sim">Sim</label>
+    <label><input type="radio" name="eletrica_manut" value="Não soube informar">Não soube informar</label>
+  </div>
+
+  <label>Apresenta problema de cupins?</label>
+  <div class="opts">
+    <label><input type="radio" name="cupins" value="Não">Não</label>
+    <label><input type="radio" name="cupins" value="Sim">Sim</label>
+    <label><input type="radio" name="cupins" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Local:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="cup_forro">Forro</label>
+    <label><input type="checkbox" name="cup_rodape">Rodapé</label>
+    <label><input type="checkbox" name="cup_estrut">Estrutura do prédio</label>
+    <label><input type="checkbox" name="cup_telhado">Telhado</label>
+    <label><input type="checkbox" name="cup_portas">Portas</label>
+    <label><input type="checkbox" name="cup_janelas">Janelas</label>
+    <label><input type="checkbox" name="cup_outro">Outro</label>
+  </div>
+  <label>Outro local (especificar)<input type="text" name="cup_outro_esp"></label>
+
+  <label>Já foi feito algum tipo de tratamento?</label>
+  <div class="opts">
+    <label><input type="radio" name="cup_trat" value="Não">Não</label>
+    <label><input type="radio" name="cup_trat" value="Sim">Sim</label>
+    <label><input type="radio" name="cup_trat" value="Não soube informar">Não soube informar</label>
+  </div>
+
+  <label>Áreas externas estão limpas e bem conservadas?</label>
+  <div class="opts">
+    <label><input type="radio" name="ext_limp" value="Não">Não</label>
+    <label><input type="radio" name="ext_limp" value="Sim">Sim</label>
+  </div>
+
+  <label>Limpeza interna é feita constantemente?</label>
+  <div class="opts">
+    <label><input type="radio" name="int_limp" value="Não">Não</label>
+    <label><input type="radio" name="int_limp" value="Sim">Sim</label>
+  </div>
+  <label>Frequência:</label>
+  <div class="opts">
+    <label><input type="radio" name="limp_freq" value="Todos os dias">Todos os dias</label>
+    <label><input type="radio" name="limp_freq" value="Dias alternados">Dias alternados</label>
+    <label><input type="radio" name="limp_freq" value="1x semana">1x semana</label>
+    <label><input type="radio" name="limp_freq" value="2x semana">2x semana</label>
+    <label><input type="radio" name="limp_freq" value="3x semana">3x semana</label>
+  </div>
+</fieldset>
+
+<h2>9. Acervos</h2>
+<fieldset><legend>9.1. Museológico</legend>
+  <label>Nº de bens culturais que compõem o acervo:</label>
+  <div class="row">
+    <div><label>Exato<input type="number" name="acer_mus_exato"></label></div>
+    <div><label>Aproximado<input type="number" name="acer_mus_aprox"></label></div>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="acer_mus_naoest">Não estimado</label>
+  </div>
+
+  <label>A quem pertence o acervo?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="mus_dono_est">Estado</label>
+    <label><input type="checkbox" name="mus_dono_pref">Prefeitura</label>
+    <label><input type="checkbox" name="mus_dono_fund">Fundação</label>
+    <label><input type="checkbox" name="mus_dono_part">Particular</label>
+    <label><input type="checkbox" name="mus_dono_uni">Universidade</label>
+    <label><input type="checkbox" name="mus_dono_outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="mus_dono_outro_esp"></label>
+
+  <label>Categorias do acervo museológico:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="cat_armas">Armas</label>
+    <label><input type="checkbox" name="cat_arq">Arqueologia</label>
+    <label><input type="checkbox" name="cat_artes_g">Artes gráficas</label>
+    <label><input type="checkbox" name="cat_pintura">Pintura</label>
+    <label><input type="checkbox" name="cat_desenho">Desenho</label>
+    <label><input type="checkbox" name="cat_escultura">Escultura</label>
+    <label><input type="checkbox" name="cat_sacra">Arte Sacra</label>
+    <label><input type="checkbox" name="cat_doc">Documentos</label>
+    <label><input type="checkbox" name="cat_etno">Etnografia</label>
+    <label><input type="checkbox" name="cat_fil">Filatelia</label>
+    <label><input type="checkbox" name="cat_folc">Folclore</label>
+    <label><input type="checkbox" name="cat_apar_com">Aparelhos de comunicação</label>
+    <label><input type="checkbox" name="cat_discos">Discos</label>
+    <label><input type="checkbox" name="cat_filmes">Filmes</label>
+    <label><input type="checkbox" name="cat_fotos">Fotografias</label>
+    <label><input type="checkbox" name="cat_neg">Negativos</label>
+    <label><input type="checkbox" name="cat_agric">Implementos agrícolas</label>
+    <label><input type="checkbox" name="cat_indum">Indumentária</label>
+    <label><input type="checkbox" name="cat_instr">Instrumentos musicais</label>
+    <label><input type="checkbox" name="cat_jornais">Jornais</label>
+    <label><input type="checkbox" name="cat_livros">Livros</label>
+    <label><input type="checkbox" name="cat_maq">Máquinas em geral</label>
+    <label><input type="checkbox" name="cat_mat">Material de construção</label>
+    <label><input type="checkbox" name="cat_min">Mineralogia</label>
+    <label><input type="checkbox" name="cat_mob">Mobiliário</label>
+    <label><input type="checkbox" name="cat_num">Numismática</label>
+    <label><input type="checkbox" name="cat_obj_trab">Objetos do trabalho</label>
+    <label><input type="checkbox" name="cat_obj_pess">Objetos de uso pessoal</label>
+    <label><input type="checkbox" name="cat_obj_dom">Objetos de uso doméstico</label>
+    <label><input type="checkbox" name="cat_rev">Revistas</label>
+    <label><input type="checkbox" name="cat_tax">Taxidermia</label>
+    <label><input type="checkbox" name="cat_outros">Outros</label>
+  </div>
+  <label>Outros (especificar)<input type="text" name="cat_outros_esp"></label>
+</fieldset>
+
+<fieldset><legend>9.2. Arquivístico</legend>
+  <label>A instituição possui arquivo?</label>
+  <div class="opts">
+    <label><input type="radio" name="arq" value="Não">Não</label>
+    <label><input type="radio" name="arq" value="Sim">Sim</label>
+  </div>
+  <label>Que tipo?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="arq_hist">Histórico</label>
+    <label><input type="checkbox" name="arq_inst">Institucional</label>
+  </div>
+  <label>Metragem linear ou itens que compõem o acervo:</label>
+  <div class="row">
+    <div><label>Exato<input type="text" name="arq_exato"></label></div>
+    <div><label>Aproximado<input type="text" name="arq_aprox"></label></div>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="arq_naoest">Não estimado</label>
+  </div>
+  <label>A quem pertence?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="arq_dono_est">Estado</label>
+    <label><input type="checkbox" name="arq_dono_pref">Prefeitura</label>
+    <label><input type="checkbox" name="arq_dono_fund">Fundação</label>
+    <label><input type="checkbox" name="arq_dono_part">Particular</label>
+    <label><input type="checkbox" name="arq_dono_uni">Universidade</label>
+    <label><input type="checkbox" name="arq_dono_outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="arq_dono_outro_esp"></label>
+  <label>Categorias do acervo arquivístico:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="arq_cat_text">Textuais/Escritos</label>
+    <label><input type="checkbox" name="arq_cat_icon">Iconográficos</label>
+    <label><input type="checkbox" name="arq_cat_cart">Cartográficos</label>
+    <label><input type="checkbox" name="arq_cat_film">Filmográficos</label>
+    <label><input type="checkbox" name="arq_cat_son">Sonoros</label>
+    <label><input type="checkbox" name="arq_cat_dig">Digitais</label>
+    <label><input type="checkbox" name="arq_cat_outros">Outros</label>
+  </div>
+  <label>Outros (especificar)<input type="text" name="arq_cat_outros_esp"></label>
+</fieldset>
+
+<fieldset><legend>9.3. Bibliográfico</legend>
+  <label>A instituição possui Biblioteca?</label>
+  <div class="opts">
+    <label><input type="radio" name="bib" value="Não">Não</label>
+    <label><input type="radio" name="bib" value="Sim">Sim</label>
+  </div>
+  <label>Nº de exemplares/itens:</label>
+  <div class="row">
+    <div><label>Exato<input type="number" name="bib_exato"></label></div>
+    <div><label>Aproximado<input type="number" name="bib_aprox"></label></div>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="bib_naoest">Não estimado</label>
+  </div>
+  <label>Temática dominante<input type="text" name="bib_tema"></label>
+  <label>A quem pertence?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="bib_dono_est">Estado</label>
+    <label><input type="checkbox" name="bib_dono_pref">Prefeitura</label>
+    <label><input type="checkbox" name="bib_dono_fund">Fundação</label>
+    <label><input type="checkbox" name="bib_dono_part">Particular</label>
+    <label><input type="checkbox" name="bib_dono_uni">Universidade</label>
+    <label><input type="checkbox" name="bib_dono_outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="bib_dono_outro_esp"></label>
+  <label>Categorias:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="bib_cat_livros">Livros</label>
+    <label><input type="checkbox" name="bib_cat_per">Periódicos</label>
+    <label><input type="checkbox" name="bib_cat_obras">Obras raras e de referência</label>
+    <label><input type="checkbox" name="bib_cat_outros">Outros</label>
+  </div>
+  <label>Outros (especificar)<input type="text" name="bib_cat_outros_esp"></label>
+</fieldset>
+
+<h2>10. Documentação Museológica</h2>
+<fieldset>
+  <label>Possui Livro de Tombo?</label>
+  <div class="opts">
+    <label><input type="radio" name="tombo" value="Não">Não</label>
+    <label><input type="radio" name="tombo" value="Sim">Sim</label>
+    <label><input type="radio" name="tombo" value="Outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="tombo_outro"></label>
+
+  <label>O acervo encontra-se:</label>
+  <div class="opts">
+    <label><input type="radio" name="acer_tomb" value="Totalmente tombado">Totalmente tombado</label>
+    <label><input type="radio" name="acer_tomb" value="Parcialmente tombado">Parcialmente tombado</label>
+    <label><input type="radio" name="acer_tomb" value="Sem tombamento">Sem tombamento</label>
+  </div>
+
+  <label>Bens culturais são adquiridos por:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="aq_doacao">Doação</label>
+    <label><input type="checkbox" name="aq_compra">Compras</label>
+    <label><input type="checkbox" name="aq_permuta">Permuta</label>
+    <label><input type="checkbox" name="aq_legado">Legado</label>
+    <label><input type="checkbox" name="aq_emp">Empréstimo</label>
+  </div>
+
+  <label>O acervo é registrado/documentado?</label>
+  <div class="opts">
+    <label><input type="radio" name="doc" value="Não">Não</label>
+    <label><input type="radio" name="doc" value="Sim">Sim</label>
+    <label><input type="radio" name="doc" value="Parcialmente">Parcialmente</label>
+  </div>
+  <label>Forma de registro:</label>
+  <div class="row">
+    <div><label><input type="checkbox" name="doc_tombo"> Livro de Tombo/Registro — Nº bens
+      <input type="number" name="doc_tombo_qtd"></label></div>
+    <div><label><input type="checkbox" name="doc_ficha"> Ficha de Catalogação — Nº bens
+      <input type="number" name="doc_ficha_qtd"></label></div>
+    <div><label><input type="checkbox" name="doc_foto"> Documentação fotográfica — Nº bens
+      <input type="number" name="doc_foto_qtd"></label></div>
+    <div><label><input type="checkbox" name="doc_soft"> Software/Programa — Nº bens
+      <input type="number" name="doc_soft_qtd"></label></div>
+  </div>
+  <label>Nome do software/programa<input type="text" name="doc_soft_nome"></label>
+  <label>Especificar<textarea name="doc_esp"></textarea></label>
+
+  <label>Quanto à catalogação existente, as fichas encontram-se:</label>
+  <div class="opts">
+    <label><input type="radio" name="fichas" value="Totalmente preenchidas">Totalmente preenchidas</label>
+    <label><input type="radio" name="fichas" value="Parcialmente preenchidas">Parcialmente preenchidas</label>
+    <label><input type="radio" name="fichas" value="Sem preenchimento">Sem preenchimento</label>
+  </div>
+
+  <label>Os bens culturais estão:</label>
+  <div class="opts">
+    <label><input type="radio" name="marcacao" value="Todos marcados">Todos marcados</label>
+    <label><input type="radio" name="marcacao" value="Alguns marcados">Alguns marcados</label>
+    <label><input type="radio" name="marcacao" value="Sem nº de identificação">Sem nº de identificação</label>
+  </div>
+
+  <label>A instituição realiza pesquisa para fins de documentação do acervo?</label>
+  <div class="opts">
+    <label><input type="radio" name="pesq_doc" value="Não">Não</label>
+    <label><input type="radio" name="pesq_doc" value="Sim">Sim</label>
+  </div>
+
+  <label>Realiza inventário do(s) acervo(s)?</label>
+  <div class="opts">
+    <label><input type="radio" name="inv" value="Não">Não</label>
+    <label><input type="radio" name="inv" value="Sim">Sim</label>
+  </div>
+  <label>Periodicidade:</label>
+  <div class="opts">
+    <label><input type="radio" name="inv_per" value="Anualmente">Anualmente</label>
+    <label><input type="radio" name="inv_per" value="Bienalmente">Bienalmente</label>
+    <label><input type="radio" name="inv_per" value="Outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="inv_per_outro"></label>
+  <label>Ano do último inventário<input type="text" name="inv_ano"></label>
+
+  <label>Como é feito o registro do inventário?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="inv_arrol">Arrolamento físico</label>
+    <label><input type="checkbox" name="inv_base">Base de dados</label>
+    <label><input type="checkbox" name="inv_outro">Outro</label>
+  </div>
+  <label>Outro (especificar)<input type="text" name="inv_outro_esp"></label>
+</fieldset>
+
+<h2>11. Conservação e Restauro</h2>
+<fieldset>
+  <label>É realizada a higienização do(s) acervo(s)?</label>
+  <div class="opts">
+    <label><input type="radio" name="hig_acervo" value="Não">Não</label>
+    <label><input type="radio" name="hig_acervo" value="Sim">Sim</label>
+  </div>
+  <label>Especifique<input type="text" name="hig_acervo_esp"></label>
+  <label>Frequência:</label>
+  <div class="opts">
+    <label><input type="radio" name="hig_freq" value="Diária">Diária</label>
+    <label><input type="radio" name="hig_freq" value="Semanal">Semanal</label>
+    <label><input type="radio" name="hig_freq" value="1x mês">1x ao mês</label>
+    <label><input type="radio" name="hig_freq" value="Quando necessário">Sempre que necessário</label>
+  </div>
+
+  <label>Higienização da reserva técnica?</label>
+  <div class="opts">
+    <label><input type="radio" name="hig_rt" value="Não">Não</label>
+    <label><input type="radio" name="hig_rt" value="Sim">Sim</label>
+  </div>
+  <label>Especifique<input type="text" name="hig_rt_esp"></label>
+  <label>Frequência:</label>
+  <div class="opts">
+    <label><input type="radio" name="hig_rt_freq" value="Diária">Diária</label>
+    <label><input type="radio" name="hig_rt_freq" value="Semanal">Semanal</label>
+    <label><input type="radio" name="hig_rt_freq" value="1x mês">1x ao mês</label>
+    <label><input type="radio" name="hig_rt_freq" value="Quando necessário">Sempre que necessário</label>
+  </div>
+
+  <label>Estado de conservação dos bens:</label>
+  <div class="row">
+    <div><label><input type="checkbox" name="est_bom"> Bom — Quant.
+      <input type="number" name="est_bom_q">
+      <span class="opts"><label><input type="radio" name="est_bom_t" value="exata">exata</label>
+      <label><input type="radio" name="est_bom_t" value="estimada">estimada</label></span></label></div>
+    <div><label><input type="checkbox" name="est_reg"> Regular — Quant.
+      <input type="number" name="est_reg_q">
+      <span class="opts"><label><input type="radio" name="est_reg_t" value="exata">exata</label>
+      <label><input type="radio" name="est_reg_t" value="estimada">estimada</label></span></label></div>
+    <div><label><input type="checkbox" name="est_ruim"> Ruim — Quant.
+      <input type="number" name="est_ruim_q">
+      <span class="opts"><label><input type="radio" name="est_ruim_t" value="exata">exata</label>
+      <label><input type="radio" name="est_ruim_t" value="estimada">estimada</label></span></label></div>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" name="est_nsi">Não soube informar</label>
+  </div>
+
+  <label>Existem bens culturais que necessitam de restauro?</label>
+  <div class="opts">
+    <label><input type="radio" name="rest_nec" value="Não">Não</label>
+    <label><input type="radio" name="rest_nec" value="Sim">Sim</label>
+  </div>
+  <label>Quantos?<input type="number" name="rest_qtd"></label>
+
+  <label>De que material?</label>
+  <div class="row">
+    <div><label><input type="checkbox" name="mat_couro"> Couro — Quantos? <input type="number" name="mat_couro_q"></label></div>
+    <div><label><input type="checkbox" name="mat_foto"> Fotografia — Quantos? <input type="number" name="mat_foto_q"></label></div>
+    <div><label><input type="checkbox" name="mat_mad"> Madeira — Quantos? <input type="number" name="mat_mad_q"></label></div>
+    <div><label><input type="checkbox" name="mat_metal"> Metal — Quantos? <input type="number" name="mat_metal_q"></label></div>
+    <div><label><input type="checkbox" name="mat_papel"> Papel — Quantos? <input type="number" name="mat_papel_q"></label></div>
+    <div><label><input type="checkbox" name="mat_porc"> Porcelana — Quantos? <input type="number" name="mat_porc_q"></label></div>
+    <div><label><input type="checkbox" name="mat_tec"> Tecido — Quantos? <input type="number" name="mat_tec_q"></label></div>
+    <div><label><input type="checkbox" name="mat_tela"> Tela — Quantos? <input type="number" name="mat_tela_q"></label></div>
+    <div><label><input type="checkbox" name="mat_outro"> Outros: <input type="text" name="mat_outro_esp"> — Quantos? <input type="number" name="mat_outro_q"></label></div>
+  </div>
+
+  <label>A instituição possui setor de restauro?</label>
+  <div class="opts">
+    <label><input type="radio" name="setor_rest" value="Não">Não</label>
+    <label><input type="radio" name="setor_rest" value="Sim">Sim</label>
+  </div>
+  <label>Em caso negativo, qual o procedimento?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="rest_contrata">Contrata profissional/empresa</label>
+    <label><input type="checkbox" name="rest_parc">Faz parceria com outra instituição</label>
+    <label><input type="checkbox" name="rest_edital">Depende de edital</label>
+  </div>
+  <label>Profissionais/empresas que já atuaram no acervo<textarea name="rest_quem"></textarea></label>
+
+  <h3>Equipamentos de conservação/controle ambiental</h3>
+  <label>Possui equipamentos?</label>
+  <div class="opts">
+    <label><input type="radio" name="equip" value="Não">Não</label>
+    <label><input type="radio" name="equip" value="Sim">Sim</label>
+  </div>
+  <p style="font-size:.9em;color:#555">Marque os equipamentos por localização:</p>
+  <table style="width:100%;border-collapse:collapse;font-size:.85em">
+    <thead><tr style="background:#0a4d68;color:#fff">
+      <th style="padding:6px;text-align:left">Equipamento</th>
+      <th>Exp. longa</th><th>Exp. temp.</th><th>Reserva técnica</th>
+      <th>Arquivo</th><th>Biblioteca</th><th>Lab. restauro</th>
+    </tr></thead>
+    <tbody id="eqTable"></tbody>
+  </table>
+
+  <h3>Reserva técnica</h3>
+  <label>Na reserva técnica os objetos estão armazenados em:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="rt_estantes">Estantes</label>
+    <label><input type="checkbox" name="rt_mapotecas">Mapotecas</label>
+    <label><input type="checkbox" name="rt_armarios">Armários</label>
+    <label><input type="checkbox" name="rt_arquivos">Arquivos</label>
+    <label><input type="checkbox" name="rt_prat">Prateleiras avulsas</label>
+    <label><input type="checkbox" name="rt_pend">Pendurados</label>
+  </div>
+  <label>Há itens sobrepostos ou empilhados?</label>
+  <div class="opts">
+    <label><input type="radio" name="rt_sobr" value="Não">Não</label>
+    <label><input type="radio" name="rt_sobr" value="Sim">Sim</label>
+  </div>
+  <label>Objetos estão acondicionados?</label>
+  <div class="opts">
+    <label><input type="radio" name="rt_acond" value="Não">Não</label>
+    <label><input type="radio" name="rt_acond" value="Sim">Sim</label>
+  </div>
+  <label>Tipo de embalagem<input type="text" name="rt_emb"></label>
+
+  <label>Existem peças com problema de infestação (cupins, brocas, fungos, etc.)?</label>
+  <div class="opts">
+    <label><input type="radio" name="inf_acer" value="Não">Não</label>
+    <label><input type="radio" name="inf_acer" value="Sim">Sim</label>
+    <label><input type="radio" name="inf_acer" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Caso afirmativo, estão isolados?</label>
+  <div class="opts">
+    <label><input type="radio" name="inf_iso" value="Não">Não</label>
+    <label><input type="radio" name="inf_iso" value="Sim">Sim</label>
+    <label><input type="radio" name="inf_iso" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Existe medida de tratamento em curso?</label>
+  <div class="opts">
+    <label><input type="radio" name="inf_trat" value="Não">Não</label>
+    <label><input type="radio" name="inf_trat" value="Sim">Sim</label>
+    <label><input type="radio" name="inf_trat" value="Não soube informar">Não soube informar</label>
+  </div>
+  <label>Caso afirmativo, indique<textarea name="inf_trat_esp"></textarea></label>
+</fieldset>
+
+<h2>12. Exposição</h2>
+<fieldset><legend>12.1. Exposição de longa duração</legend>
+  <label>A instituição possui exposição de longa duração?</label>
+  <div class="opts">
+    <label><input type="radio" name="exp_ld" value="Não">Não</label>
+    <label><input type="radio" name="exp_ld" value="Sim">Sim</label>
+  </div>
+  <label>Quando foi inaugurada (ano)?<input type="text" name="exp_ld_ano"></label>
+  <label>O acervo está exposto:</label>
+  <div class="opts">
+    <label><input type="radio" name="exp_ld_ex" value="Parcialmente">Parcialmente</label>
+    <label><input type="radio" name="exp_ld_ex" value="Totalmente">Totalmente</label>
+  </div>
+  <label>Estimativa de itens expostos<input type="number" name="exp_ld_qtd"></label>
+
+  <label>Recurso museográfico utilizado:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="mg_par">Paredes falsas</label>
+    <label><input type="checkbox" name="mg_pain">Painéis</label>
+    <label><input type="checkbox" name="mg_bases">Bases</label>
+    <label><input type="checkbox" name="mg_ped">Pedestais</label>
+    <label><input type="checkbox" name="mg_vit">Vitrines</label>
+  </div>
+
+  <label>Bens expostos têm legendas/etiquetas/textos?</label>
+  <div class="opts">
+    <label><input type="radio" name="leg" value="Não">Não</label>
+    <label><input type="radio" name="leg" value="Sim">Sim</label>
+    <label><input type="radio" name="leg" value="Parcialmente">Parcialmente</label>
+  </div>
+
+  <label>Complementação utilizada:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="comp_des">Desenhos</label>
+    <label><input type="checkbox" name="comp_fotos">Fotos</label>
+    <label><input type="checkbox" name="comp_mapas">Mapas</label>
+    <label><input type="checkbox" name="comp_proj">Projeções</label>
+    <label><input type="checkbox" name="comp_som">Sistemas sonoros</label>
+    <label><input type="checkbox" name="comp_vid">Vídeos</label>
+    <label><input type="checkbox" name="comp_outros">Outros</label>
+  </div>
+  <label>Outros (especificar)<input type="text" name="comp_outros_esp"></label>
+
+  <label>Tipo de iluminação utilizada:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="ilu_nat">Luz natural</label>
+    <label><input type="checkbox" name="ilu_fria">Luz fria (fluorescente/LED)</label>
+    <label><input type="checkbox" name="ilu_inc">Luz incandescente</label>
+    <label><input type="checkbox" name="ilu_mista">Luz mista</label>
+  </div>
+</fieldset>
+
+<fieldset><legend>12.2. Exposição temporária</legend>
+  <label>A instituição realiza:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="exp_temp">Exposições temporárias</label>
+    <label><input type="checkbox" name="exp_itin">Exposições itinerantes</label>
+    <label><input type="checkbox" name="exp_fora">Exposições fora da sede</label>
+    <label><input type="checkbox" name="exp_nao">Não realiza</label>
+  </div>
+  <label>Temática mais frequente<textarea name="exp_temp_tema"></textarea></label>
+  <label>Intervalo médio entre exposições temporárias:</label>
+  <div class="opts">
+    <label><input type="radio" name="exp_inter" value="Mensal">Mensal</label>
+    <label><input type="radio" name="exp_inter" value="Bimestral">Bimestral</label>
+    <label><input type="radio" name="exp_inter" value="Trimestral">Trimestral</label>
+    <label><input type="radio" name="exp_inter" value="Semestral">Semestral</label>
+    <label><input type="radio" name="exp_inter" value="Anual">Anual</label>
+    <label><input type="radio" name="exp_inter" value="NSI">Não soube informar</label>
+  </div>
+  <label>Atividades paralelas:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="par_pal">Palestras</label>
+    <label><input type="checkbox" name="par_vis">Visitas guiadas</label>
+    <label><input type="checkbox" name="par_of">Oficinas</label>
+    <label><input type="checkbox" name="par_perf">Performance</label>
+    <label><input type="checkbox" name="par_outras">Outras</label>
+  </div>
+  <label>Outras (especificar)<input type="text" name="par_outras_esp"></label>
+
+  <label>Recebe exposições de outras instituições/itinerantes?</label>
+  <div class="opts">
+    <label><input type="radio" name="rec_exp" value="Não">Não</label>
+    <label><input type="radio" name="rec_exp" value="Sim">Sim</label>
+    <label><input type="radio" name="rec_exp" value="NSI">Não soube informar</label>
+  </div>
+  <label>Frequência:</label>
+  <div class="opts">
+    <label><input type="radio" name="rec_freq" value="Semestralmente">Semestralmente</label>
+    <label><input type="radio" name="rec_freq" value="Anualmente">Anualmente</label>
+    <label><input type="radio" name="rec_freq" value="NSI">Não soube informar</label>
+  </div>
+</fieldset>
+
+<h2>13. Pesquisa</h2>
+<fieldset>
+  <label>A instituição realiza pesquisas referentes a:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="pes_acervo">Acervo</label>
+    <label><input type="checkbox" name="pes_corr">Correlatas à temática</label>
+    <label><input type="checkbox" name="pes_patr">Patrono</label>
+    <label><input type="checkbox" name="pes_bio">Biografias</label>
+    <label><input type="checkbox" name="pes_cid">História da cidade</label>
+    <label><input type="checkbox" name="pes_folc">Manifestações folclóricas</label>
+    <label><input type="checkbox" name="pes_civ">Datas cívicas</label>
+    <label><input type="checkbox" name="pes_outras">Outras</label>
+    <label><input type="checkbox" name="pes_nsi">Não soube informar</label>
+  </div>
+  <label>Outras (especificar)<input type="text" name="pes_outras_esp"></label>
+
+  <label>Existem programas de pesquisa associados a outras entidades?</label>
+  <div class="opts">
+    <label><input type="radio" name="pes_assoc" value="Não">Não</label>
+    <label><input type="radio" name="pes_assoc" value="Sim">Sim</label>
+    <label><input type="radio" name="pes_assoc" value="NSI">Não soube informar</label>
+  </div>
+  <label>Quais?</label>
+  <div class="opts">
+    <label><input type="checkbox" name="pes_e1g">Escolas de 1º grau</label>
+    <label><input type="checkbox" name="pes_e2g">Escolas de 2º grau</label>
+    <label><input type="checkbox" name="pes_clubes">Clubes</label>
+    <label><input type="checkbox" name="pes_uni">Universidades</label>
+    <label><input type="checkbox" name="pes_assoc_e">Associações</label>
+    <label><input type="checkbox" name="pes_museus">Outros museus da cidade</label>
+    <label><input type="checkbox" name="pes_centros">Centros de estudos</label>
+    <label><input type="checkbox" name="pes_part">Particulares</label>
+    <label><input type="checkbox" name="pes_ent_out">Entidades de outras cidades</label>
+    <label><input type="checkbox" name="pes_pref">Prefeitura</label>
+  </div>
+
+  <label>O resultado da pesquisa é compartilhado?</label>
+  <div class="opts">
+    <label><input type="radio" name="pes_comp" value="Não">Não</label>
+    <label><input type="radio" name="pes_comp" value="Sim">Sim</label>
+    <label><input type="radio" name="pes_comp" value="NSI">Não soube informar</label>
+  </div>
+</fieldset>
+
+<h2>14. Ação Cultural</h2>
+<fieldset>
+  <label>A instituição realiza trabalhos de Ação Cultural?</label>
+  <div class="opts">
+    <label><input type="radio" name="ac" value="Não">Não</label>
+    <label><input type="radio" name="ac" value="Sim">Sim</label>
+  </div>
+  <label>Frequência:</label>
+  <div class="opts">
+    <label><input type="radio" name="ac_freq" value="Mensal">Mensal</label>
+    <label><input type="radio" name="ac_freq" value="Bimestral">Bimestral</label>
+    <label><input type="radio" name="ac_freq" value="Trimestral">Trimestral</label>
+    <label><input type="radio" name="ac_freq" value="Semestral">Semestral</label>
+    <label><input type="radio" name="ac_freq" value="Anual">Anual</label>
+    <label><input type="radio" name="ac_freq" value="NSI">Não soube informar</label>
+  </div>
+  <label>Tipo de atividade:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="ac_teatro">Teatro</label>
+    <label><input type="checkbox" name="ac_cinema">Cinema</label>
+    <label><input type="checkbox" name="ac_conf">Conferências</label>
+    <label><input type="checkbox" name="ac_cursos">Cursos</label>
+    <label><input type="checkbox" name="ac_deb">Debates</label>
+    <label><input type="checkbox" name="ac_sem">Seminários</label>
+    <label><input type="checkbox" name="ac_shows">Shows</label>
+    <label><input type="checkbox" name="ac_danca">Dança</label>
+    <label><input type="checkbox" name="ac_conc">Concertos musicais</label>
+    <label><input type="checkbox" name="ac_nsi">Não soube informar</label>
+  </div>
+</fieldset>
+
+<h2>15. Serviço Educativo</h2>
+<fieldset>
+  <label>A instituição desenvolve atividades educativas?</label>
+  <div class="opts">
+    <label><input type="radio" name="edu" value="Não">Não</label>
+    <label><input type="radio" name="edu" value="Sim">Sim</label>
+    <label><input type="radio" name="edu" value="NSI">Não soube informar</label>
+  </div>
+  <label>Frequência:</label>
+  <div class="opts">
+    <label><input type="radio" name="edu_freq" value="Diária">Diária</label>
+    <label><input type="radio" name="edu_freq" value="Semanal">Semanal</label>
+    <label><input type="radio" name="edu_freq" value="Mensal">Mensal</label>
+    <label><input type="radio" name="edu_freq" value="Finais de semana">Finais de semana</label>
+    <label><input type="radio" name="edu_freq" value="NSI">Não soube informar</label>
+  </div>
+  <label>Temáticas das ações:</label>
+  <div class="opts">
+    <label><input type="checkbox" name="edu_acervo">Acervo</label>
+    <label><input type="checkbox" name="edu_exp">Exposições</label>
+    <label><input type="checkbox" name="edu_hist">História da cidade</label>
+    <label><input type="checkbox" name="edu_outras">Outras temáticas</label>
+  </div>
+  <label>Outras (especificar)<input type="text" name="edu_outras_esp"></label>
+</fieldset>
+
+<h2>16. Responsáveis pelas Informações</h2>
+<fieldset><div class="row">
+  <div><label>Nome<input type="text" name="resp_nome"></label></div>
+  <div><label>Cargo<input type="text" name="resp_cargo"></label></div>
+  <div><label>Contato<input type="text" name="resp_contato"></label></div>
+  <div><label>Data de preenchimento<input type="date" name="resp_data"></label></div>
+</div></fieldset>
+
+<div class="actions">
+  <button type="button" onclick="window.print()">Imprimir / Salvar PDF</button>
+  <button type="button" class="secondary" onclick="saveXLSX()">Baixar respostas (XLSX)</button>
+  <button type="reset" class="secondary">Limpar</button>
+</div>
+</form>
+
+<script>
+// Build equipment table
+const equipamentos = ['Ar condicionado 24 horas','Ar condicionado liga/desliga','Desumidificador','Filtros de ar','Filtros de luz','Higrômetro','Luxímetro','Termohigrógrafo','Umidificador'];
+const colunas = ['exp_ld','exp_tp','rt','arq','bib','lab'];
+const tbody = document.getElementById('eqTable');
+equipamentos.forEach((eq,i)=>{
+  const key = 'eq_'+i;
+  let row = `<tr><td style="padding:6px;border-bottom:1px solid #eee">${eq}</td>`;
+  colunas.forEach(c=>{row+=`<td style="text-align:center;border-bottom:1px solid #eee"><input type="checkbox" name="${key}_${c}"></td>`});
+  row+='</tr>';
+  tbody.insertAdjacentHTML('beforeend',row);
+});
+
+// Save form data as XLSX
+function saveXLSX(){
+  const f = document.getElementById('diag');
+  const data = {};
+  new FormData(f).forEach((v,k)=>{
+    if(data[k]!==undefined){data[k]=[].concat(data[k],v)} else {data[k]=v}
+  });
+  // include unchecked checkboxes as false
+  f.querySelectorAll('input[type=checkbox]').forEach(c=>{if(!(c.name in data)) data[c.name]='Não'; else if(data[c.name]==='on') data[c.name]='Sim';});
+  const rows = [['Campo','Resposta']];
+  Object.entries(data).forEach(([k,v])=>{
+    if(v!=='' && v!==undefined && v!==null) rows.push([k, Array.isArray(v)?v.join(', '):String(v)]);
+  });
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  XLSX.utils.book_append_sheet(wb, ws, 'Respostas');
+  XLSX.writeFile(wb, 'diagnostico-campo.xlsx');
+}
+
+// Auto-save to localStorage
+const form = document.getElementById('diag');
+const STORAGE_KEY='diag-campo-sisem-2026';
+try{
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+  Object.entries(saved).forEach(([k,v])=>{
+    const els = form.querySelectorAll(`[name="${k}"]`);
+    els.forEach(el=>{
+      if(el.type==='checkbox'||el.type==='radio'){if(el.value===v||v===true||(Array.isArray(v)&&v.includes(el.value))) el.checked=true}
+      else el.value=v;
+    });
+  });
+}catch(e){}
+form.addEventListener('input',()=>{
+  const d={};
+  new FormData(form).forEach((v,k)=>{d[k]=d[k]?[].concat(d[k],v):v});
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(d));
+});
+</script>
+</body>
+</html>
